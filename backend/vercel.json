@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "database.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+      { "src": "/(.*)", "dest": "/database.js" }
+    ],
+    "env": {
+      "PORT": "3000"
+    }
+  }
+  
