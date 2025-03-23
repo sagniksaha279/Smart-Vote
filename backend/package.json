@@ -22,6 +22,6 @@
     "node": ">=14.0.0"
   },
   "keywords": ["express", "mysql", "twilio", "sms", "voting"],
-  "author": "Your Name",
+  "author": "Sagnik Saha",
   "license": "MIT"
 }
