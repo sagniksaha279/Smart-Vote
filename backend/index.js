@@ -37,6 +37,8 @@ db.connect(err => {
     }
 });
 
+module.exports = db;
+
 // Login API
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
