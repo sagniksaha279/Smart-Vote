@@ -60,6 +60,10 @@ app.post("/login", (req, res) => {
 app.post("/check-epic", (req, res) => {
     const { EPIC_no } = req.body;
     
+    if (!EPIC_no) {
+        return res.status(400).json({ success: false, message: "❌ EPIC number is required" });
+    }
+    
     db.query("SELECT name, FatherName, voted, city, phoneNumber FROM details WHERE EPIC_no = ?", [EPIC_no], (err, results) => {
         if (err) {
             console.error("❌ Error executing query:", err);
