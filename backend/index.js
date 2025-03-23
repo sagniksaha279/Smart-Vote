@@ -133,6 +133,11 @@ app.post("/submit-feedback", (req, res) => {
     });
 });
 
+//something
+app.get("/", (req, res) => {
+    res.send("✅ SmartVote Backend is Running!");
+});
+
 
 // Start Server
 app.listen(PORT, () => {
