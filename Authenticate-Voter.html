@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPIC Verification</title>
+    <link rel="icon" href="tech_riders_logo.jpg">
+    <style>
+        body{
+            background-color: beige;
+        }
+        form button{
+            border-radius: 3px;
+            border: 1px solid black;
+        }
+        form button:hover{
+            transition: background-color 1s 0.2ms ease-in-out;
+            background-color: grey;
+            color: whitesmoke;
+        }
+    </style>
+    <script>
+        async function checkEPIC(event) {
+            event.preventDefault(); // Prevent form from refreshing the page
+
+            const epicNumber = document.getElementById("epicInput").value;
+
+            // Send the data to backend
+            const response = await fetch("http://localhost:3000/check-epic", { //change
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ EPIC_no: epicNumber })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById("result").innerHTML =
+                    `<h3>✅ Your Details are:</h3>
+                     <p><b>Name:</b> ${data.name}</p>
+                     <p><b>Father Name:</b> ${data.father_name}</p>
+                     <p>🏠<b>Address:</b> ${data.city}</p>
+                     <h2>🗳️ You are eligible to VOTE</h2>
+                     <p>📩 SMS Sent!</p>`;
+            } else {
+                if (data.alreadyVoted) {
+                    document.getElementById("result").innerHTML =
+                        `<h3>⚠️ Cannot Vote Again!</h3>
+                         <p>❌ This person has already voted and cannot vote again.</p>`;
+                }else{
+                    document.getElementById("result").innerHTML =`
+                    <h3>😞 Sorry! EPIC Not Found</h3>
+                    <p>🔍 Please check your EPIC number and try again.</p>`;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Enter Voters EPIC Number</h2>
+    <form onsubmit="checkEPIC(event)">
+        <input type="text" id="epicInput" placeholder="Enter EPIC Number" required>
+        <button type="submit">Check</button>        
+    </form>
+    <div id="result"></div>
+</body>
+</html>

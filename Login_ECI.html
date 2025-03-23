@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Riders</title>
+    <link rel="icon" href="tech_riders_logo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="Login_evaluator.css">
+    
+    <script>
+        function checkDetailsOfECI(event){
+            event.preventDefault(); // Prevents the form from submitting
+            
+            const name = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (name.toLowerCase() !== "vivek joshi") {
+                alert("❌ Name does not match!");
+                return;
+            }
+            if (password.toLowerCase() !== "helloeci123") {
+                alert("⚠️ Be Careful! Password does not match");
+                return;
+            }
+
+            alert("✅ Login Successful!");
+            window.location.href = "Add-Evaluator.html"; // Redirect on successful login
+        }
+    </script>
+</head>
+<body>
+    <center><h1>Login Yourself</h1></center>
+    <div class="container">
+        <h6>Login</h6>
+        <form onsubmit="checkDetailsOfECI(event)">
+            <div class="log-pass">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="Enter name" required>
+                <br>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter Password" required>
+            </div>
+            <button type="submit" id="submit-btn"><i class="fa-solid fa-share"></i> Submit</button>
+            <button type="reset"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+        </form>
+    </div>
+</body>
+</html>
