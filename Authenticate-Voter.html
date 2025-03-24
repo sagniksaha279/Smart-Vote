@@ -25,8 +25,9 @@
 
             const epicNumber = document.getElementById("epicInput").value;
 
+            const API_BASE_URL = "https://smart-vote.vercel.app"; 
             // Send the data to backend
-            const response = await fetch("http://localhost:3000/check-epic", { //change
+            const response = await fetch(`${API_BASE_URL}/check-epic`, { //change
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ EPIC_no: epicNumber })
