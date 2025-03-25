@@ -28,7 +28,6 @@ const db = mysql.createConnection({
     port: process.env.DB_PORT
 });
 
-
 db.connect(err => {
     if (err) {
         console.error("❌ Database connection failed:", err);
@@ -36,7 +35,6 @@ db.connect(err => {
         console.log("✅ Connected to SmartVote Database!");
     }
 });
-
 
 // Login API
 app.post("/login", (req, res) => {
@@ -64,7 +62,7 @@ app.post("/check-epic", (req, res) => {
     if (!EPIC_no) {
         return res.status(400).json({ success: false, message: "❌ EPIC number is required" });
     }
-    
+
     db.query("SELECT name, FatherName, voted, city, phoneNumber FROM details WHERE EPIC_no = ?", [EPIC_no], (err, results) => {
         if (err) {
             console.error("❌ Error executing query:", err);
@@ -89,7 +87,8 @@ app.post("/check-epic", (req, res) => {
 
                     // Send SMS Notification
                     if (user.phoneNumber) {
-                        const messageBody = `Dear ${user.name}, your vote has been successfully registered in ${user.city}. Thank you for participating in Voting!🗳️`;
+                        const dateTime = new Date().toLocaleString();
+                        const messageBody = `Dear ${user.name}, your vote has been successfully registered in ${user.city} on ${dateTime}. Thank you for participating in Voting!🗳️`;
 
                         twilioClient.messages.create({
                             body: messageBody,
@@ -120,7 +119,6 @@ app.post("/check-epic", (req, res) => {
     });
 });
 
-
 // Route to store feedback
 app.post("/submit-feedback", (req, res) => {
     const { message } = req.body;
@@ -142,7 +140,6 @@ app.post("/submit-feedback", (req, res) => {
 app.get("/", (req, res) => {
     res.send("✅ SmartVote Backend is Running!");
 });
-
 
 // Start Server
 app.listen(PORT, () => {
