@@ -4,8 +4,6 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const twilio = require("twilio");
-const bcrypt = require("bcryptjs");
-
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,36 +38,21 @@ db.connect(err => {
     }
 });
 
-// API to Test DB Connection
-app.get("/test-db", (req, res) => {
-    db.ping(err => {
-        if (err) {
-            return res.status(500).json({ success: false, message: "Database connection failed", error: err.message });
-        }
-        res.json({ success: true, message: "✅ Database connection is active!" });
-    });
-});
-
-// Secure Login API with Password Hashing
+// Login API
 app.post("/login", (req, res) => {
     const { username, password } = req.body;
-    const query = "SELECT * FROM evalDetails WHERE username = ?";
+    const query = "SELECT * FROM evalDetails WHERE username = ? AND password = ?";
 
-    db.query(query, [username], (err, results) => {
+    db.query(query, [username, password], (err, results) => {
         if (err) {
             console.error("Error in query:", err);
             return res.status(500).json({ success: false, message: "Database error" });
         }
 
         if (results.length > 0) {
-            bcrypt.compare(password, results[0].password, (err, match) => {
-                if (err || !match) {
-                    return res.json({ success: false, message: "❌ Invalid credentials!" });
-                }
-                res.json({ success: true, message: "✅ Login successful!" });
-            });
+            res.json({ success: true, message: "✅ Login successful!" });
         } else {
-            res.json({ success: false, message: "❌ Username not found!" });
+            res.json({ success: false, message: "❌ Username or Password does not match!" });
         }
     });
 });
