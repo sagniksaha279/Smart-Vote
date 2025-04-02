@@ -14,7 +14,6 @@ const twilioClient = twilio(
     process.env.TWILIO_AUTH_TOKEN
 );
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -57,7 +56,7 @@ app.post("/login", (req, res) => {
     });
 });
 
-// Check EPIC API
+// Check EPIC API (Fixed Version)
 app.post("/check-epic", (req, res) => {
     const { EPIC_no } = req.body;
     if (!EPIC_no) {
@@ -70,46 +69,46 @@ app.post("/check-epic", (req, res) => {
             return res.status(500).json({ success: false, message: "Database error" });
         }
         
-        if (results.length > 0) {
-            const user = results[0];
-            if (user.voted) {
-                return res.json({
-                    success: false,
-                    alreadyVoted: true, 
-                    message: "⚠️ This person has already voted! Voting again is not allowed."
-                });
-            }
-            
-            db.query("UPDATE details SET voted = TRUE WHERE EPIC_no = ?", [EPIC_no], (updateErr) => {
-                if (updateErr) {
-                    console.error("❌ Error updating voted status:", updateErr);
-                    return res.status(500).json({ success: false, message: "Error updating vote status" });
-                }
-                
-                // Send SMS Notification
-                if (user.phoneNumber) {
-                    const messageBody = `Dear ${user.name}, your vote has been successfully registered in ${user.city}. Thank you for participating in Voting!🗳️`;
-                    twilioClient.messages.create({
-                        body: messageBody,
-                        from: process.env.TWILIO_PHONE_NUMBER,
-                        to: user.phoneNumber 
-                    })
-                    .then(() => console.log("📩 SMS sent successfully to", user.phoneNumber))
-                    .catch(smsErr => console.error("❌ Error sending SMS:", smsErr));
-                }
-                
-                res.json({
-                    success: true,
-                    name: user.name,   
-                    father_name: user.FatherName,  
-                    city: user.city,
-                    phoneNumber: user.phoneNumber,
-                    message: "🗳️ Vote Registered Successfully! and SMS notification sent."
-                });
-            });
-        } else {
-            res.json({ success: false, message: "❌ EPIC number not found" });
+        if (results.length === 0) {
+            return res.json({ success: false, message: "❌ EPIC number not found" });
         }
+
+        const user = results[0];
+
+        if (user.voted) {
+            return res.json({
+                success: false,
+                alreadyVoted: true, 
+                message: "⚠️ This person has already voted! Voting again is not allowed."
+            });
+        }
+
+        // Update the 'voted' status first
+        db.query("UPDATE details SET voted = TRUE WHERE EPIC_no = ?", [EPIC_no], (updateErr) => {
+            if (updateErr) {
+                console.error("❌ Error updating voted status:", updateErr);
+                return res.status(500).json({ success: false, message: "Error updating vote status" });
+            }
+            if (user.phoneNumber) {
+                const messageBody = `Dear ${user.name}, your vote has been successfully registered in ${user.city}. Thank you for participating in Voting!🗳️`;
+                
+                twilioClient.messages.create({
+                    body: messageBody,
+                    from: process.env.TWILIO_PHONE_NUMBER,
+                    to: user.phoneNumber 
+                })
+                .then(() => console.log("📩 SMS sent successfully to", user.phoneNumber))
+                .catch(smsErr => console.error("❌ Error sending SMS:", smsErr));
+            }
+            res.json({
+                success: true,
+                name: user.name,   
+                father_name: user.FatherName,  
+                city: user.city,
+                phoneNumber: user.phoneNumber,
+                message: "🗳️ Vote Registered Successfully! SMS notification sent."
+            });
+        });
     });
 });
 
@@ -128,12 +127,10 @@ app.post("/submit-feedback", (req, res) => {
     });
 });
 
-// Root Route
 app.get("/", (req, res) => {
     res.send("✅ SmartVote Backend is Running!");
 });
 
-// Start Server
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
