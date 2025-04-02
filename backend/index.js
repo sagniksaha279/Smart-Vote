@@ -14,6 +14,7 @@ const twilioClient = twilio(
     process.env.TWILIO_AUTH_TOKEN
 );
 
+// Middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -56,7 +57,7 @@ app.post("/login", (req, res) => {
     });
 });
 
-// Check EPIC API (Fixed Version)
+// Check EPIC API (Fixed for Immediate SMS)
 app.post("/check-epic", (req, res) => {
     const { EPIC_no } = req.body;
     if (!EPIC_no) {
@@ -68,7 +69,7 @@ app.post("/check-epic", (req, res) => {
             console.error("❌ Error executing query:", err);
             return res.status(500).json({ success: false, message: "Database error" });
         }
-        
+
         if (results.length === 0) {
             return res.json({ success: false, message: "❌ EPIC number not found" });
         }
@@ -83,30 +84,40 @@ app.post("/check-epic", (req, res) => {
             });
         }
 
-        // Update the 'voted' status first
-        db.query("UPDATE details SET voted = TRUE WHERE EPIC_no = ?", [EPIC_no], (updateErr) => {
-            if (updateErr) {
-                console.error("❌ Error updating voted status:", updateErr);
-                return res.status(500).json({ success: false, message: "Error updating vote status" });
-            }
-            if (user.phoneNumber) {
-                const messageBody = `Dear ${user.name}, your vote has been successfully registered in ${user.city}. Thank you for participating in Voting!🗳️`;
-                
-                twilioClient.messages.create({
-                    body: messageBody,
-                    from: process.env.TWILIO_PHONE_NUMBER,
-                    to: user.phoneNumber 
-                })
-                .then(() => console.log("📩 SMS sent successfully to", user.phoneNumber))
-                .catch(smsErr => console.error("❌ Error sending SMS:", smsErr));
-            }
-            res.json({
-                success: true,
-                name: user.name,   
-                father_name: user.FatherName,  
-                city: user.city,
-                phoneNumber: user.phoneNumber,
-                message: "🗳️ Vote Registered Successfully! SMS notification sent."
+        // Send SMS Notification before updating the database
+        let smsPromise = Promise.resolve(); // Default to a resolved promise if no phone number
+
+        if (user.phoneNumber) {
+            const messageBody = `Dear ${user.name}, your vote has been successfully registered in ${user.city}. Thank you for participating in Voting!🗳️`;
+
+            smsPromise = twilioClient.messages.create({
+                body: messageBody,
+                from: process.env.TWILIO_PHONE_NUMBER,
+                to: user.phoneNumber
+            }).then(() => {
+                console.log("📩 SMS sent successfully to", user.phoneNumber);
+            }).catch(smsErr => {
+                console.error("❌ Error sending SMS:", smsErr);
+            });
+        }
+
+        // Update the 'voted' status AFTER sending SMS
+        smsPromise.finally(() => {
+            db.query("UPDATE details SET voted = TRUE WHERE EPIC_no = ?", [EPIC_no], (updateErr) => {
+                if (updateErr) {
+                    console.error("❌ Error updating voted status:", updateErr);
+                    return res.status(500).json({ success: false, message: "Error updating vote status" });
+                }
+
+                // Respond only after the update is completed
+                res.json({
+                    success: true,
+                    name: user.name,   
+                    father_name: user.FatherName,  
+                    city: user.city,
+                    phoneNumber: user.phoneNumber,
+                    message: "🗳️ Vote Registered Successfully! SMS notification sent."
+                });
             });
         });
     });
@@ -127,10 +138,12 @@ app.post("/submit-feedback", (req, res) => {
     });
 });
 
+// Root Route
 app.get("/", (req, res) => {
     res.send("✅ SmartVote Backend is Running!");
 });
 
+// Start Server
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
