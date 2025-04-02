@@ -477,12 +477,11 @@ body{
     border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb{
-    background: linear-gradient(#003366,#0050D4,#1febee);
+    background: linear-gradient(#1febee,#0050D4,#003366);
     border-radius: 7px;
 }
 
 @media screen and (max-width: 1002px) {
-    /* General Styles to Ensure Wrapping */
     * {
         box-sizing: border-box;
         word-wrap: break-word;
@@ -504,7 +503,7 @@ body{
     }
     .how-it-works #htw-button {
         display: block;
-        margin: 20px auto; /* Centers the button horizontally */
+        margin: 50px auto; 
         text-align: center;
     }
     /* Download Icons */
@@ -524,7 +523,7 @@ body{
     }
     .main .main-container button {
         display: block;
-        margin: 20px auto; /* Centers the button */
+        margin: 20px auto;
     }
 
     /* Announcement */
@@ -541,7 +540,7 @@ body{
 
     .key-features .key-containers {
         width: 90%;
-        height: auto; /* Increases height dynamically */
+        height: auto; 
         margin: 50px auto;
         padding: 20px;
         text-align: center;
@@ -572,7 +571,7 @@ body{
     /* Services Provided */
     .service-provided {
         width: 90%;
-        height: auto; /* Increases height dynamically */
+        height: auto; 
         margin: 50px auto;
         padding: 20px;
         text-align: center;
@@ -584,7 +583,7 @@ body{
     }
 
     .service-provided .service-list ul li {
-        margin-bottom: 15px; /* Adds spacing between items */
+        margin-bottom: 15px; 
     }
 
     /* Feedback Form */
@@ -644,6 +643,44 @@ body{
         font-size: 16px;
         padding: 5px 10px;
         display: inline-block;
+    }
+}
+@media screen and (max-width: 999px){
+    .download-options {
+        width: 95%;
+        left: 2.5%;
+        top: 10px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .download-options h1 {
+        font-size: 18px;
+        word-wrap: break-word;
+    }
+
+    .download-options p {
+        font-size: 14px;
+        margin: 5px auto;
+        padding: 5px;
+        max-width: 90%;
+        text-align: center;
+    }
+
+    .download-options .OS {
+        width: 90%;
+        max-width: 200px;
+        margin: 10px auto;
+        font-size: 14px;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .download-options .OS a {
+        font-size:12px;
+        margin-bottom: 2px;
+        padding: 3px;
+        text-overflow: ellipsis;
     }
 }
 @media screen and (max-width: 625px) {
