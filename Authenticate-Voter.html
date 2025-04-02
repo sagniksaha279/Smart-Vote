@@ -54,6 +54,11 @@
                     <p>🔍 Please check your EPIC number and try again.</p>`;
                 }
             }
+            // Hide the demo text after displaying the result
+            const demoText = document.getElementById("demoText");
+            if (demoText) {
+                demoText.style.display = "none";
+            }
         }
     </script>
 </head>
@@ -64,5 +69,6 @@
         <button type="submit">Check</button>        
     </form>
     <div id="result"></div>
+    <p id="demoText">For demonstration use EPIC number - <b>VBN5638209</b> / <b>WER7628391</b> / <b>FGR2948573</b> / <b>POI2638495</b> (only one time use) </p>
 </body>
 </html>
