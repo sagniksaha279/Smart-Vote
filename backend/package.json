@@ -1,7 +1,7 @@
 {
   "name": "smartvote-backend",
   "version": "1.0.0",
-  "description": "SmartVote backend with Express.js, MySQL, and Twilio",
+  "description": "Backend for SmartVote system",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -21,7 +21,7 @@
     "nodemon": "^3.0.2"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": "18.x"  
   },
   "keywords": [
     "express",
