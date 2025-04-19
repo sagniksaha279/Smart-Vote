@@ -5,7 +5,7 @@
 ---
 
 ## 🌐 Live Demo
-🔗 [Smart Merit](https://smartvoter.netlify.app)
+🔗 [Smart Vote](https://smartvoter.netlify.app)
 
 ---
 
