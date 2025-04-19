@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Vote</title>
+    <link rel="stylesheet" href="1_style.css" rel="preload" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="icon" href="tech_riders_logo.jpg">
+</head>
+<body>
+   
+    <!--header-->
+    <div class="header">
+        <div class="quote">
+            <h2>Smart Verification for Seamless Elections</h2>
+            <button type="submit" id="icon" data-icon-target="#download-options" class="icon">
+                <i class="fa-solid fa-download"></i>
+            </button>
+            <div  id="download-options" class="download-options">
+                <ul>
+                    <div class="download-icon-close">
+                        <h1>Download Smart Vote Application</h1> 
+                        <button data-icon-close class="close-download-icon">&times;</button>
+                    </div>
+                    <p>Choose your Operating System</p>
+                    <li class="OS"><i class="fa-brands fa-android"></i>&nbsp;&nbsp;<a href="working.html">Android</a></li>
+                    <li class="OS"><i class="fa-brands fa-apple"></i>&nbsp;&nbsp;<a href="working.html">macOS</a></li>
+                    <li class="OS"><i class="fa-brands fa-windows"></i>&nbsp;&nbsp;<a href="working.html">Windows</a></li>
+                </ul>
+            </div>
+            <p>"The future of elections is digital, where speed meets security for a flawless voting experience."</p> 
+        </div>
+        <div class="container">
+            <ul>
+                <li>
+                    <a href="#main-container" target="_self">Home</a>
+                </li>
+                <li>
+                    <a href="#how-it-works" target="_self" >How it Works</a>
+                </li>
+                <li>
+                    <a href="Register.html" target="_blank">Register</a>
+                </li>
+                <li>
+                    <a href="#contact" target="_self">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>    
+    <!--Main Content-->
+    <div class="main">
+
+        <!--making the get started part-->
+        <div class="main-container" id="main-container">
+            <h1>Transforming Elections: Secure, Swift, and Seamless Voting for Every Citizen</h1>
+            <p>"Automating verification, eliminating electoral inefficiencies."</p>
+            <button><a href="Register.html" target="_blank">Get Started</a></button>
+        </div>
+
+
+        <div class="announcement">
+            <h1>Annoucement</h1>
+            <marquee behavior="scroll" direction="left" scrollamount="8" loop="1000">
+                <a>Voting time 7:00AM to 5:00PM</a> 
+            </marquee>
+        </div>
+
+        <!--Making the how it works part-->
+        <div class="how-it-works" id="how-it-works">
+            <button id="htw-button" data-htw-target="#htw-content"><i class="fa-solid fa-circle-info"></i>&nbsp;&nbsp;How it Works</button>
+
+            <div class="htw-content" id="htw-content">
+                <div class="htw-header">
+                    <h1>Know how the validation works</h1>
+                    <button data-htw-close class="close-htw-button"  >&times;</button>
+                </div>
+                
+                <div class="htw-body">
+                        <ul>
+                            <li>
+                                <b>Step 1: Evaluator log into the portal</b>
+                                Evaluator uploads their username and password if they exists in our database.
+                                Then the system extracts and verifies the evaluator and takes to the voter authentication process.
+                            </li>
+                            <li>
+                                <b>Step 2: Validate Voter Details</b>
+                                Evaluator enters voter's EPIC number then the extracted details (name, Father name, city, etc.) are cross-checked 
+                                against the official election database.
+                                If discrepancies are found, users will be notified to re-upload or correct their details.
+                            </li>
+                            <li>
+                                <b>Step 3: Election Day Authentication</b>
+                                On the election day, verified evaluator log in and authenticate themselves.
+                                The system confirms eligibility and prevents duplicate voting.
+                            </li>
+                            <li>
+                                <b>Step 4: Secure Voting Access</b>
+                                Once authenticated, eligible voters gain access to the voting system.
+                                Their vote is securely cast and recorded in compliance with election security standards.
+                            </li>
+                            <li>
+                                <b>Step 5: Confirmation & Security Measures</b>
+                                A confirmation message is provided after a successful vote.
+                                Advanced encryption and security measures ensure data privacy and prevent fraud.
+                            </li>
+                    </ul>
+                </div>
+            </div>
+            <!--making pop-up-->
+            <div id="overlay" ></div>
+        </div>
+        <!--htw ends here-->
+
+        <!--Key Features-->
+        <h1 id="kf">Key Features</h1>
+        <div class="key-features">    
+            <div class="key-containers">
+                <h1>⏳</h1>
+                <h3>Time Management</h3>
+                <hr id="line">
+                <p>Ensuring fast and accurate voter authentication, our 
+                    system minimizes wait times and streamlines the verification process.
+                    It enhances efficiency by integrating real-time validation with election schedules.</p>
+            </div>
+            <div class="key-containers">
+                <h1>🔍</h1>
+                <h3>Error Free</h3>
+                <hr id="line">
+                <p>Our system ensures fast and accurate voter authentication, 
+                    minimizing wait times. It enhances efficiency by integrating 
+                    real-time validation with election schedules.</p>
+            </div>
+            <div class="key-containers">
+                <h1>💻</h1>
+                <h3>Available on cross-platforms</h3>
+                <hr id="line">
+                <p>The system is designed for cross-platform compatibility, 
+                    ensuring seamless access on web, mobile, and desktop devices. 
+                    It provides a consistent user experience across different operating systems and browsers.</p>
+            </div>
+        </div>
+
+        <!--VISION-->
+        <div class="our-vision">
+            <img src="Design.webp" alt="Voter image">
+            <h1>OUR AIM</h1>
+            <div class="our-aims">
+                <div class="aims">
+                    <h3>Evaluation of Voters</h3>
+                    <hr id="line">
+                    <p>Voters can be evaluated based on project alignment, considering factors like awareness,
+                        engagement, and decision-making consistency with project goals. Their impact is measured 
+                        through participation rates, informed choices, and adherence to the project's vision.</p>
+                </div>
+                <div class="aims">
+                    <h3>Voter's Authentication</h3>
+                    <hr id="line">
+                    <p>Voter authentication ensures that only eligible individuals participate
+                        by verifying identities through secure methods like biometrics, OTPs, or 
+                        ID verification. This prevents fraud and maintains the integrity of the voting process.</p>
+                </div>
+                <div class="aims">
+                    <h3>Managing Nationwide Voting System</h3>
+                    <hr id="line">
+                    <p>Managing a nationwide voting system involves securing voter data, 
+                        ensuring seamless authentication, and enabling transparent vote casting and
+                        counting. It requires robust infrastructure, real-time monitoring, and strict 
+                        security protocols to maintain electoral integrity.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="service-provided">
+        <h2>We offer Solutions</h2>
+        <div class="service-list">
+        <ul>
+            <li>
+                <h4>85%</h4>
+                <p>Voter Verification</p>
+            </li>
+            <li>
+                <h4>90% Queue Elimination</h4>
+                <p>Helping people to avoid lines at polling booths</p>
+            </li>
+            <li>
+                <h4>24/7</h4>
+                <p>Service Available</p>
+            </li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="feedback-form">
+        <h1>Send us your feedback</h1><br>
+        <form id="feedbackForm">
+        <div class="chat">
+            <input type="text" id="feedback" placeholder="Enter your feedback" required>
+            <button type="submit"><i class="fa-solid fa-share"></i></button>
+            <button type="reset"><i class="fa-solid fa-rotate-right"></i></button>
+        </div>
+    </form>
+    </div>
+
+   <div class="footer" id="contact">
+        <h2>Smart Vote - Secure, Swift, and Seamless Voting for Every Citizen</h2>
+        <div class="footer-links">
+            <p><a href="privacy-policy.html" target="_blank">Privacy Policy</a><a href="terms.html" target="_blank">Terms & Conditions</a><a href="mailto:mesagnik279@gmail.com">Mail us</a></p>
+        </div>
+        <p>&copy; Innovating Today for a Smarter Tomorrow | GDSC-2025</p>
+        <p id="own-saying">Built with ❤️ & Code - <span class="color-tech-riders"><a href="Details-about-us.html">Tech Riders</a></span></p>
+   </div>
+
+   <!--link js file-->
+   <script src="1_script.js"></script>
+</body>
+</html>
