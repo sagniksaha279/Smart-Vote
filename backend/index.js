@@ -48,11 +48,11 @@ app.post('/login', async (req, res) => {
   );
 
   if (rows.length > 0) {
-    // Success – you can store session or redirect
-    res.redirect('/dashboard.html');
-  } else {
-    res.status(401).send("❌ Invalid Evaluator ID, Username or Password");
-  }
+  res.status(200).json({ success: true });
+} else {
+  res.status(401).json({ success: false, message: "❌ Invalid Evaluator ID, Username or Password" });
+}
+
 });
 
 
