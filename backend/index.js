@@ -39,23 +39,22 @@ db.connect(err => {
 });
 
 // Login API
-app.post("/login", (req, res) => {
-    const { username, password } = req.body;
-    const query = "SELECT * FROM evalDetails WHERE username = ? AND password = ?";
+app.post('/login', async (req, res) => {
+  const { eval_id, username, password } = req.body;
 
-    db.query(query, [username, password], (err, results) => {
-        if (err) {
-            console.error("Error in query:", err);
-            return res.status(500).json({ success: false, message: "Database error" });
-        }
+  const [rows] = await db.query(
+    "SELECT * FROM evalDetails WHERE eval_id = ? AND username = ? AND password = ?",
+    [eval_id, username, password]
+  );
 
-        if (results.length > 0) {
-            res.json({ success: true, message: "✅ Login successful!" });
-        } else {
-            res.json({ success: false, message: "❌ Username or Password does not match!" });
-        }
-    });
+  if (rows.length > 0) {
+    // Success – you can store session or redirect
+    res.redirect('/dashboard.html');
+  } else {
+    res.status(401).send("❌ Invalid Evaluator ID, Username or Password");
+  }
 });
+
 
 // Check EPIC API (Fixed for Immediate SMS)
 app.post("/check-epic", (req, res) => {
