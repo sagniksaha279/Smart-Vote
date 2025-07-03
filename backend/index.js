@@ -48,15 +48,13 @@ app.post('/login', async (req, res) => {
   );
 
   if (rows.length > 0) {
-  res.status(200).json({ success: true });
-} else {
-  res.status(401).json({ success: false, message: "❌ Invalid Evaluator ID, Username or Password" });
-}
-
+    res.status(200).json({ success: true });
+  } else {
+    res.status(401).json({ success: false, message: "❌ Invalid Evaluator ID, Username or Password" });
+  }
 });
 
-
-// Check EPIC API (Fixed for Immediate SMS)
+// Check EPIC API
 app.post("/check-epic", (req, res) => {
     const { EPIC_no } = req.body;
     if (!EPIC_no) {
@@ -84,7 +82,7 @@ app.post("/check-epic", (req, res) => {
         }
 
         // Send SMS Notification before updating the database
-        let smsPromise = Promise.resolve(); // Default to a resolved promise if no phone number
+        let smsPromise = Promise.resolve();
 
         if (user.phoneNumber) {
             const messageBody = `Dear ${user.name}, your vote has been successfully registered in ${user.city}. Thank you for participating in Voting!🗳️`;
@@ -100,7 +98,6 @@ app.post("/check-epic", (req, res) => {
             });
         }
 
-        // Update the 'voted' status AFTER sending SMS
         smsPromise.finally(() => {
             db.query("UPDATE details SET voted = TRUE WHERE EPIC_no = ?", [EPIC_no], (updateErr) => {
                 if (updateErr) {
@@ -108,7 +105,6 @@ app.post("/check-epic", (req, res) => {
                     return res.status(500).json({ success: false, message: "Error updating vote status" });
                 }
 
-                // Respond only after the update is completed
                 res.json({
                     success: true,
                     name: user.name,   
